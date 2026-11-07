@@ -3,8 +3,8 @@ github_mirror=github.com #github镜像
 csgo_folder=/home/xxmod/steamcmd/gamedir/game/csgo #cs文件夹
 temp_folder=./temp #临时文件(建议默认)
 
-export http_proxy="http://192.168.1.49:2080"
-export https_proxy="http://192.168.1.49:2080"
+export http_proxy="socks5://192.168.1.49:12080"
+export https_proxy="socks5://192.168.1.49:12080"
 echo -e "\033[31mgithub_mirror = \033[33m${github_mirror}\033[0m"
 echo -e "\033[31mcsgo_folder = \033[33m${csgo_folder}\033[0m"
 
@@ -54,6 +54,12 @@ download() {
     echo -e "\033[31mMenuManager最新的tag是\033[33m${latest_tag}\033[0m"
     curl -L -o "menumanager.zip" "https://${github_mirror}/NickFox007/MenuManagerCS2/releases/download/${latest_tag}/MenuManager.zip"
     echo -e "\033[31mMenuManager已下载\033[0m"
+
+    #下载buffinspector
+    export latest_tag=$(curl -s https://api.github.com/repos/samyycX/CS2-BuffInspector/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
+    echo -e "\033[31mBuffInspector最新的tag是\033[33m${latest_tag}\033[0m"
+    curl -L -o "buffinspector.zip" "https://${github_mirror}/samyycX/CS2-BuffInspector/releases/download/${latest_tag}/BuffInspector.zip"
+    echo -e "\033[31mBuffInspector已下载\033[0m"
 }
 
 release() {
@@ -65,6 +71,7 @@ release() {
     mkdir -p "${temp_folder}/playersettings"
     mkdir -p "${temp_folder}/anybaselib"
     mkdir -p "${temp_folder}/menumanager"
+    mkdir -p "${temp_folder}/buffinspector"
     unzip counterstrikesharp.zip -d "${temp_folder}/cssharp"
     unzip weaponpaints.zip -d "${temp_folder}/wp"
     unzip matchzy.zip -d "${temp_folder}/matchzy"
@@ -72,24 +79,36 @@ release() {
     unzip playersettings.zip -d "${temp_folder}/playersettings"
     unzip anybaselib.zip -d "${temp_folder}/anybaselib"
     unzip menumanager.zip -d "${temp_folder}/menumanager"
+    unzip buffinspector.zip -d "${temp_folder}/buffinspector"
     echo -e "\033[31m已解压到${temp_folder}\033[0m"
+}
+
+copy_translationfile(){
+    rm "${temp_folder}/copy/addons/counterstrikesharp/plugins/WeaponPaints/lang/en.json"
+    rm "${temp_folder}/copy/addons/counterstrikesharp/plugins/MatchZy/lang/en.json"
+    rm "${temp_folder}/copy/addons/counterstrikesharp/lang/en.json"
+    cp "${temp_folder}/copy/addons/counterstrikesharp/plugins/WeaponPaints/lang/zh-cn.json" "${temp_folder}/copy/addons/counterstrikesharp/plugins/WeaponPaints/lang/en.json"
+    cp "${temp_folder}/copy/addons/counterstrikesharp/plugins/MatchZy/lang/zh-Hans.json" "${temp_folder}/copy/addons/counterstrikesharp/plugins/MatchZy/lang/en.json"
+    cp "${temp_folder}/copy/addons/counterstrikesharp/lang/zh-CN.json" "${temp_folder}/copy/addons/counterstrikesharp/lang/en.json"
 }
 
 copy2copy_folder() {
     mkdir -p "${temp_folder}/copy/addons"
     mkdir -p "${temp_folder}/copy/cfg"
+    mkdir -p "${temp_folder}/copy/addons/counterstrikesharp/gamedata"
     cp -r "${temp_folder}/metamod/addons/." "${temp_folder}/copy/addons"
     #cp -r "${temp_folder}/matchzy/cfg/." "${temp_folder}/copy/cfg" #第一次安装取消注释这一行
     cp -r "${temp_folder}/matchzy/addons/." "${temp_folder}/copy/addons"
     cp -r "${temp_folder}/cssharp/addons/." "${temp_folder}/copy/addons"
+    cp "${temp_folder}/wp/addons/counterstrikesharp/gamedata/weaponpaints.json"  "${temp_folder}/copy/addons/counterstrikesharp/gamedata/weaponpaints.json"
     rm -rf "${temp_folder}/wp/gamedata"
-    cp -r "${temp_folder}/wp/." "${temp_folder}/copy/addons/counterstrikesharp/plugins"
+    cp -r "${temp_folder}/wp/addons/counterstrikesharp/plugins/." "${temp_folder}/copy/addons/counterstrikesharp/plugins"
     cp -r "${temp_folder}/playersettings/addons/." "${temp_folder}/copy/addons"
     cp -r "${temp_folder}/menumanager/addons/." "${temp_folder}/copy/addons"
     cp -r "${temp_folder}/anybaselib/addons/." "${temp_folder}/copy/addons"
+    cp -r "${temp_folder}/buffinspector/." "${temp_folder}/copy/addons/counterstrikesharp"
     echo -e "\033[31m文件已复制到${temp_folder}/copy\033[0m"
 }
-
 
 copy2cs(){
     read -r -p "按回车确认复制到cs文件夹..." _
@@ -109,6 +128,7 @@ case "$choice" in
         download
         release
         copy2copy_folder
+        copy_translationfile
         copy2cs
         ;;
     2)
