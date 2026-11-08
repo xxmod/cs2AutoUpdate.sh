@@ -90,6 +90,14 @@ copy_translationfile(){
     cp "${temp_folder}/copy/addons/counterstrikesharp/plugins/WeaponPaints/lang/zh-cn.json" "${temp_folder}/copy/addons/counterstrikesharp/plugins/WeaponPaints/lang/en.json"
     cp "${temp_folder}/copy/addons/counterstrikesharp/plugins/MatchZy/lang/zh-Hans.json" "${temp_folder}/copy/addons/counterstrikesharp/plugins/MatchZy/lang/en.json"
     cp "${temp_folder}/copy/addons/counterstrikesharp/lang/zh-CN.json" "${temp_folder}/copy/addons/counterstrikesharp/lang/en.json"
+    cp "${temp_folder}/copy/addons/counterstrikesharp/plugins/WeaponPaints/data/agents_zh-CN.json" "${temp_folder}/copy/addons/counterstrikesharp/plugins/WeaponPaints/data/agents_en.json"
+    cp "${temp_folder}/copy/addons/counterstrikesharp/plugins/WeaponPaints/data/collectibles_zh-CN.json" "${temp_folder}/copy/addons/counterstrikesharp/plugins/WeaponPaints/data/collectibles_en.json"
+    cp "${temp_folder}/copy/addons/counterstrikesharp/plugins/WeaponPaints/data/gloves_zh-CN.json" "${temp_folder}/copy/addons/counterstrikesharp/plugins/WeaponPaints/data/gloves_en.json"
+    cp "${temp_folder}/copy/addons/counterstrikesharp/plugins/WeaponPaints/data/keychains_zh-CN.json" "${temp_folder}/copy/addons/counterstrikesharp/plugins/WeaponPaints/data/keychains_en.json"
+    cp "${temp_folder}/copy/addons/counterstrikesharp/plugins/WeaponPaints/data/music_zh-CN.json" "${temp_folder}/copy/addons/counterstrikesharp/plugins/WeaponPaints/data/music_en.json"
+    cp "${temp_folder}/copy/addons/counterstrikesharp/plugins/WeaponPaints/data/stickers_zh-CN.json" "${temp_folder}/copy/addons/counterstrikesharp/plugins/WeaponPaints/data/stickers_en.json"
+    cp "${temp_folder}/copy/addons/counterstrikesharp/plugins/WeaponPaints/data/skins_zh-CN.json" "${temp_folder}/copy/addons/counterstrikesharp/plugins/WeaponPaints/data/skins_en.json"
+    echo -e "\033[31m翻译文件已复制\033[0m"
 }
 
 copy2copy_folder() {
