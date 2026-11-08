@@ -1,6 +1,6 @@
 # CS2AutoUpdate.sh
 
-> 为了避免每次游戏更新导致繁琐且重复的插件更新，开发此脚本用于自动化更新CS2插件
+> 为了避免每次游戏更新导致繁琐且重复的插件更新，开发此脚本用于自动化更新CS2插件，同时会把中文的翻译文件直接复制到英文
 
 ## 更新列表
 
@@ -8,6 +8,7 @@
 * CounterStrikeSharp
 * MatchZy
 * WeaponPaints
+* BuffInspector
 * PlayerSettings(WP前置)
 * AnyBaseLib(WP前置)
 * MenuManager(WP前置)
